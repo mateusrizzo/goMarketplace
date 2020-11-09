@@ -80,19 +80,22 @@ const CartProvider: React.FC = ({ children }) => {
     [products],
   );
 
-  const decrement = useCallback(async id => {
-    const decrementedProduct = products.map(product =>
-      product.id === id
-        ? { ...product, quantity: product.quantity - 1 }
-        : product,
-    );
-    setProducts(decrementedProduct);
+  const decrement = useCallback(
+    async id => {
+      const decrementedProduct = products.map(product =>
+        product.id === id
+          ? { ...product, quantity: product.quantity - 1 }
+          : product,
+      );
+      setProducts(decrementedProduct);
 
-    await AsyncStorage.setItem(
-      '@GoMarketplace:products',
-      JSON.stringify(decrementedProduct),
-    );
-  }, []);
+      await AsyncStorage.setItem(
+        '@GoMarketplace:products',
+        JSON.stringify(decrementedProduct),
+      );
+    },
+    [products],
+  );
 
   const value = React.useMemo(
     () => ({ addToCart, increment, decrement, products }),
